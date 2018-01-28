@@ -3,9 +3,14 @@ contrapy
 
 Contracts for Python 3
 
-.. image:: https://snyk.io/test/github/digitalmensch/contrapy/badge.svg?targetFile=requirements.txt
-   :target: https://snyk.io/test/github/digitalmensch/contrapy?targetFile=requirements.txt
-   :alt: Known Vulnerabilities
+.. image:: https://snyk.io/test/github/digitalmensch/contrapy/badge.svg
+   :target: https://snyk.io/test/github/digitalmensch/contrapy
+
+.. image:: https://travis-ci.org/digitalmensch/contrapy.svg?branch=master
+    :target: https://travis-ci.org/digitalmensch/contrapy
+
+.. image:: https://coveralls.io/repos/github/digitalmensch/contrapy/badge.svg?branch=master
+   :target: https://coveralls.io/github/digitalmensch/contrapy?branch=master
 
 Examples
 --------
