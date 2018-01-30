@@ -3,20 +3,35 @@ import types
 
 def check(*contracts):
 
-    def contract(predicate, exception):
+    def build_contract(predicate, exception):
         def _check(*val):
             if not predicate(*val):
                 raise exception
         return _check
 
-    def contractify(obj):
+    def contractify(obj, funcname=None, name=None):
         if type(obj) is type:
-            return contract(lambda val: isinstance(val, obj), TypeError(f'should be {obj.__name__}'))
+            return build_contract(
+                lambda val: isinstance(val, obj),
+                TypeError(f'{name} should have type {obj.__name__}')
+            )
+
         if isinstance(obj, types.FunctionType):
-            return contract(obj, ValueError(f'failed check {obj}'))
+            return build_contract(
+                obj,
+                ValueError(f'failed check {obj.__name__}')
+            )
+
         if isinstance(obj, (bool, int, float, str, bytes)):
-            return contract(lambda val: val == obj, ValueError(f'should be {obj}'))
-        return contract(lambda val: False, Exception('invalid contract'))
+            return build_contract(
+                lambda val: val == obj,
+                ValueError(f'{name} should be {obj}')
+            )
+
+        return build_contract(
+            lambda val: False,
+            Exception('invalid contract')
+        )
 
     def apply_contracts(contracts, values):
         for arglist, contract in contracts:
@@ -38,7 +53,7 @@ def check(*contracts):
         for argname, contract in func.__annotations__.items():
             contracts.append((
                 (argname,),
-                contractify(contract)
+                contractify(contract, name=argname)
             ))
 
         check_before = [
