@@ -1,0 +1,6 @@
+attrs==17.4.0
+-e git+git@github.com:digitalmensch/contrapy.git@c360945e53c8c6eb6eae85a1c6bb1fbfa1e79724#egg=contrapy
+pluggy==0.6.0
+py==1.5.2
+pytest==3.3.2
+six==1.11.0
