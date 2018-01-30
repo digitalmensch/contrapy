@@ -13,7 +13,7 @@ def check(*contracts):
         if type(obj) is type:
             return contract(lambda val: isinstance(val, obj), TypeError(f'should be {obj.__name__}'))
         if isinstance(obj, types.FunctionType):
-            return obj
+            return contract(obj, ValueError(f'failed check {obj}'))
         if isinstance(obj, (bool, int, float, str, bytes)):
             return contract(lambda val: val == obj, ValueError(f'should be {obj}'))
         return contract(lambda val: False, Exception('invalid contract'))
