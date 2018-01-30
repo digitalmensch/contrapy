@@ -4,8 +4,8 @@ import types
 def check(*contracts):
 
     def contract(predicate, exception):
-        def _check(val):
-            if not predicate(val):
+        def _check(*val):
+            if not predicate(*val):
                 raise exception
         return _check
 
