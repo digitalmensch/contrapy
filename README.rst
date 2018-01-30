@@ -12,20 +12,25 @@ Contracts for Python 3
 .. image:: https://coveralls.io/repos/github/digitalmensch/contrapy/badge.svg?branch=master
    :target: https://coveralls.io/github/digitalmensch/contrapy?branch=master
 
+.. image:: https://img.shields.io/pypi/pyversions/contrapy.svg
+   :target: https://pypi.python.org/pypi/contrapy
+
+.. image:: https://img.shields.io/pypi/l/contrapy.svg
+   :target: https://github.com/digitalmensch/contrapy/blob/master/LICENSE
+
 Examples
 --------
 
 .. code:: python
 
-    from contrapy import check, isint, isfloat, arg, ret
+    import contrapy
     
-    @check
-    def int_incr(n : isint) -> isint:
-        return n + 1
-
-    pos_float = arg( any(float, int), gt_0 = lambda n: n > 0) )
-    ret_gt_n = ret( isfloat, gt_0 = lambda r: r > 0, gt_n = lambda r, n: r > n )
-
-    @check
-    def rand_incr(n : pos_float) -> ret_gt_n:
-        return n + random.random()
+    @contrapy.check(lambda a, b, _return: a + b == _return, lambda a, b: a < b)
+    def demo(a : 22, b : float) -> float:
+        return a + b
+    
+    >>> demo(22, 33.0)
+    55.0
+    >>> demo(21, 33.0)
+    [...]
+    ValueError: a should be 22
