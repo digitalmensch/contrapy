@@ -3,20 +3,24 @@ import types
 
 def check(*contracts):
 
+    def contract(predicate, exception):
+        def _check(val):
+            if not predicate(val):
+                raise exception
+        return _check
+
     def contractify(obj):
         if type(obj) is type:
-            return lambda val: isinstance(val, obj)
+            return contract(lambda val: isinstance(val, obj), TypeError(f'should be {obj.__name__}'))
         if isinstance(obj, types.FunctionType):
             return obj
         if isinstance(obj, (bool, int, float, str, bytes)):
-            return lambda val: val == obj
-        return lambda val: False
+            return contract(lambda val: val == obj, ValueError(f'should be {obj}'))
+        return contract(lambda val: False, Exception('invalid contract'))
 
     def apply_contracts(contracts, values):
         for arglist, contract in contracts:
-            args = [values.get(name) for name in arglist]
-            if not contract(*args):
-                raise Exception(f'contract violated {contract}')
+            contract(*[values.get(name) for name in arglist])
 
     contracts = [
         (
