@@ -4,6 +4,7 @@ import math
 
 
 def test_argument_complex_combined():
+
     def sum_is_10(a, b, c):
         return a + b + c == 10
 
@@ -14,11 +15,11 @@ def test_argument_complex_combined():
         return a == 5 and b == 5 and c == 0 and _return == 1
 
     @contrapy.check(sum_is_10, prod_is_zero, this_combination)
-    def good(a : int, b : int, c : int) -> 1:
+    def good(a: int, b: int, c: int) -> 1:
         return (a + b) ** c
 
     @contrapy.check(sum_is_10, prod_is_zero, this_combination)
-    def bad(a : int, b : int, c : int):
+    def bad(a: int, b: int, c: int):
         return 999
 
     with pytest.raises(ValueError):

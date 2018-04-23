@@ -4,8 +4,9 @@ import math
 
 
 def test_argument_lambda():
+
     @contrapy.check()
-    def demo(a : (lambda a: a > 10)):
+    def demo(a: (lambda a: a > 10)):
         return True
 
     with pytest.raises(ValueError):
@@ -15,14 +16,15 @@ def test_argument_lambda():
 
 
 def test_argument_named():
+
     def is_multiple_of_pi(val):
         return val % math.pi == 0
 
     good = math.pi * 7
-    bad  = good + 1
+    bad = good + 1
 
     @contrapy.check()
-    def demo(a : is_multiple_of_pi):
+    def demo(a: is_multiple_of_pi):
         return True
 
     with pytest.raises(ValueError):
